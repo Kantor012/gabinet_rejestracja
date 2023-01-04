@@ -15,6 +15,6 @@ namespace gabinet_rejestracja.Models
         public DateTime Date { get; set; }
 
         [Display(Name = "Komentarz")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
     }
 }

@@ -15,11 +15,6 @@ namespace gabinet_rejestracja.Controllers
             return View();
         }
 
-        public class ApplicationDbContext : DbContext
-        {
-            public DbSet<UserModel> Users { get; set; } 
-        }
-
         // POST: User/Register
         [HttpPost]
         public ActionResult Register(UserModel model)
