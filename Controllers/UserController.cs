@@ -25,7 +25,7 @@ namespace gabinet_rejestracja.Controllers
             }
             else
             {
-                //var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                //var ConnStr = ConfigurationManager.ConnectionStrings["ConnectionStrings"].ConnectionString;
                 using (var db = new SqlConnection("Data Source=servergabinet.database.windows.net;Initial Catalog=gabinetbaza;User ID=adming;Password=Qwerty231;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
                 {
                     var user = new UserModel
