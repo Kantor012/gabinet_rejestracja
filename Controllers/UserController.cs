@@ -53,5 +53,43 @@ namespace gabinet_rejestracja.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        // POST: User/Login
+        [HttpPost]
+        public ActionResult Login(UserModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            //var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (var db = new SqlConnection("Data Source=servergabinet.database.windows.net;Initial Catalog=gabinetbaza;User ID=adming;Password=Qwerty231;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            {
+                // sprawdzanie, czy istnieje użytkownik o podanym adresie e-mail i haśle
+                string sql = "SELECT COUNT(*) FROM [dbo].[Users] WHERE Email = @Email AND Password = @Password";
+                var command = new SqlCommand(sql, db);
+                command.Parameters.AddWithValue("@Email", model.Email);
+                command.Parameters.AddWithValue("@Password", model.Password);
+
+                db.Open();
+                int count = (int)command.ExecuteScalar();
+                if (count == 0)
+                {
+                    ModelState.AddModelError("", "Nieprawidłowy adres e-mail lub hasło.");
+                    return View(model);
+                }
+                else
+                {
+                    // zapisanie informacji o zalogowanym użytkowniku
+                    // możesz użyć np. sesji lub ciasteczek
+                    // przykład z użyciem ciasteczek:
+                    Response.Cookies.Append("Email", model.Email);
+                    Response.Cookies.Append("Password", model.Password);
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+        }
     }
 }
