@@ -49,6 +49,12 @@ namespace gabinet_rejestracja.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // GET: User/Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         // POST: User/Login
         [HttpPost]
         public ActionResult Login(UserModel model)
@@ -61,13 +67,14 @@ namespace gabinet_rejestracja.Controllers
             //var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (var db = new SqlConnection("Data Source=servergabinet.database.windows.net;Initial Catalog=gabinetbaza;User ID=adming;Password=Qwerty231;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
+                db.Open();
                 // sprawdzanie, czy istnieje użytkownik o podanym adresie e-mail i haśle
                 string sql = "SELECT COUNT(*) FROM [dbo].[Users] WHERE Email = @Email AND Password = @Password";
                 var command = new SqlCommand(sql, db);
                 command.Parameters.AddWithValue("@Email", model.Email);
                 command.Parameters.AddWithValue("@Password", model.Password);
 
-                db.Open();
+                
                 int count = (int)command.ExecuteScalar();
                 if (count == 0)
                 {
