@@ -57,7 +57,7 @@ namespace gabinet_rejestracja.Controllers
 
         // POST: User/Login
         [HttpPost]
-        public ActionResult Login(UserModel model)
+        public ActionResult Login(LoginModel model)
         {
             if (!ModelState.IsValid)
             {
